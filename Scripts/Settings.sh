@@ -60,4 +60,10 @@ else
 	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
+        echo "CONFIG_PACKAGE_luci-app-v2raya=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-dae=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-daed=y" >> ./.config
+        echo "CONFIG_PACKAGE_luci-app-appfilter=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-ddns-go=y" >> ./.config
+        echo "CONFIG_PACKAGE_luci-app-mosdns=y" >> ./.config
 fi
