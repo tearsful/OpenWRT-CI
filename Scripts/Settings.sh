@@ -12,6 +12,7 @@ sed -i 's|/bin/login|/bin/login -f root|g' feeds/packages/utils/ttyd/files/ttyd.
 
 cp -rf $GITHUB_WORKSPACE/banner package/base-files/files/etc
 chmod +x package/base-files/files/etc/*
+find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
 cp -f $GITHUB_WORKSPACE/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
 
@@ -29,12 +30,12 @@ if [[ $WRT_REPO == *"lede"* ]]; then
 	#修改默认时间格式
 	sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $LEDE_FILE
 	#添加编译日期标识
-	sed -i "s/OpenWrt \/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE/g" $LEDE_FILE
+	sed -i "s/(\(<%=pcdata(ver.luciversion)%>\))/Openwrt\/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE/g" $LEDE_FILE
 else
 	#修改immortalwrt.lan关联IP
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
-	sed -i "s/('OpenWrt') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+	sed "s/(\(luciversion || ''\))/Openwrt\/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE/g" 10_system.js
 fi
 
 #配置文件修改
