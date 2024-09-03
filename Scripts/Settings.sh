@@ -25,12 +25,12 @@ if [[ $WRT_REPO == *"lede"* ]]; then
 	#修改默认时间格式
 	sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $LEDE_FILE
 	#添加编译日期标识
-	sed -i "s/(<%=pcdata(ver.luciversion)%>)/OpenWrt \/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE/g" $LEDE_FILE
+	sed -i "s/OpenWrt \/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE/g" $LEDE_FILE
 else
 	#修改immortalwrt.lan关联IP
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
-	sed -i "s/(\(luciversion || ''\))/('OpenWrt') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+	sed -i "s/('OpenWrt') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 fi
 
 #配置文件修改
@@ -57,7 +57,6 @@ if [[ $WRT_REPO == *"lede"* ]]; then
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
         echo "CONFIG_PACKAGE_luci-app-v2raya=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-dae=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-daed=y" >> ./.config
         echo "CONFIG_PACKAGE_luci-app-appfilter=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ddns-go=y" >> ./.config
@@ -70,7 +69,6 @@ else
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
         echo "CONFIG_PACKAGE_luci-app-v2raya=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-dae=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-daed=y" >> ./.config
         echo "CONFIG_PACKAGE_luci-app-appfilter=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ddns-go=y" >> ./.config
