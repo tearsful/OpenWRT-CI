@@ -36,6 +36,8 @@ else
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
 	CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "s/(L.isObject(boardinfo.release)?boardinfo.release.description\+' \/ '\:'')\+(luciversion\|\|'')/(' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+        : > $(find ./package/base-files/files/etc/ -type f -name "openwrt_version")
+        sed -i "s/^DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='\$WRT_NAME \/ 布丁智能科技 © 蓝色的海 compiled in \$CURRENT_TIME'/" $(find ./package/base-files/files/etc/ -type f -name "openwrt_release")
 fi
 
 #配置文件修改
