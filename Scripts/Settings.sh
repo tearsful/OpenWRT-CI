@@ -59,7 +59,6 @@ if [[ $WRT_TARGET == *"IPQ"* ]]; then
 fi
 
 #科学插件设置
-if [[ $WRT_REPO == *"lede"* ]]; then
  	echo "CONFIG_PACKAGE_luci-app-openclash=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
@@ -69,14 +68,5 @@ if [[ $WRT_REPO == *"lede"* ]]; then
         echo "CONFIG_PACKAGE_luci-app-appfilter=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ddns-go=y" >> ./.config
         echo "CONFIG_PACKAGE_luci-app-mosdns=y" >> ./.config
-else
- 	echo "CONFIG_PACKAGE_luci-app-openclash=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
-        echo "CONFIG_PACKAGE_luci-app-v2raya=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-daed=y" >> ./.config
-        echo "CONFIG_PACKAGE_luci-app-appfilter=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-ddns-go=y" >> ./.config
-        echo "CONFIG_PACKAGE_luci-app-mosdns=y" >> ./.config
-fi
+	echo "CONFIG_PACKAGE_luci-app-store=y" >> ./.config
+
