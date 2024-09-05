@@ -37,7 +37,7 @@ else
 	#修改immortalwrt.lan关联IP
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
-        CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "/('Firmware Version'),/,/_('Kernel Version')/c\(' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME')," $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+        CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "/('Firmware Version')/!b;/_('Kernel Version')/!{N;s/\('Firmware Version'\),.*,_('Kernel Version')/\('Firmware Version'\), (' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'), _('Kernel Version')/}" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
         
 fi
 
