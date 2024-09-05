@@ -15,6 +15,8 @@ chmod +x package/base-files/files/etc/*
 
 cp -f $GITHUB_WORKSPACE/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
+: > $(find ./package/base-files/files/etc/ -type f -name "openwrt_version")
+CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "s/^DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'/g" $(find ./package/base-files/files/etc/ -type f -name "openwrt_release")
 
 CFG_FILE="./package/base-files/files/bin/config_generate"
 #修改默认IP地址
@@ -35,9 +37,8 @@ else
 	#修改immortalwrt.lan关联IP
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
-        CURRENT_TIME=$(date +"%Y-%m-%d %H:%M:%S") && find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js" -exec sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME')/g" {} \; -exec sed -i "s/(L.isObject(boardinfo.release)?boardinfo.release.description\+' \/ '\:'')\+(luciversion\|\|'')\+/(' $WRT_NAME ')+/g" {} \;
-        : > $(find ./package/base-files/files/etc/ -type f -name "openwrt_version")
-        sed -i "s/^DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='OpenWrt/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME/g" $(find ./package/base-files/files/etc/ -type f -name "openwrt_release")
+        CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "/('Firmware Version'),/,/_('Kernel Version')/c\(' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME')," $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+        
 fi
 
 #配置文件修改
