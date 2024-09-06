@@ -27,19 +27,12 @@ sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 sed -i "s/timezone='.*'/timezone='CST-8'/g" $CFG_FILE
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" $CFG_FILE
 
-if [[ $WRT_REPO == *"lede"* ]]; then
-	LEDE_FILE=$(find ./package/lean/autocore/ -type f -name "index.htm")
-	#修改默认时间格式
-	sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $LEDE_FILE
-	#添加编译日期标识
-	CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "s/(\(<%=pcdata(ver.luciversion)%>\))/Openwrt\/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME/g" $LEDE_FILE
-else
-	#修改immortalwrt.lan关联IP
-	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
-	#添加编译日期标识
-        CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "/('Firmware Version')/!b;/_('Kernel Version')/!{N;s/\('Firmware Version'\),.*,_('Kernel Version')/\('Firmware Version'\), (' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'), _('Kernel Version')/}" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
-        
-fi
+
+#修改immortalwrt.lan关联IP
+sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
+#添加编译日期标识
+CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "/('Firmware Version')/!b;/_('Kernel Version')/!{N;s/\('Firmware Version'\),.*,_('Kernel Version')/\('Firmware Version'\), (' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'), _('Kernel Version')/}" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
