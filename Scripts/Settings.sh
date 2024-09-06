@@ -15,7 +15,7 @@ chmod +x package/base-files/files/etc/*
 
 cp -f $GITHUB_WORKSPACE/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
-: > $(find ./package/base-files/files/etc/ -type f -name "openwrt_version")
+find ./package/base-files/files/etc/ -type f -name "openwrt_version" -exec sh -c ': > "$1"' _ {} \;
 CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "s/^DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'/g" $(find ./package/base-files/files/etc/ -type f -name "openwrt_release")
 
 CFG_FILE="./package/base-files/files/bin/config_generate"
