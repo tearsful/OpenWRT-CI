@@ -33,6 +33,13 @@ sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-m
 #添加编译日期标识
 CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "/('Firmware Version')/!b;/_('Kernel Version')/!{N;s/\('Firmware Version'\),.*,_('Kernel Version')/\('Firmware Version'\), (' $WRT_NAME ') + (' \/ 布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'), _('Kernel Version')/}" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/packages/net/v2ray-geodata
+git clone --depth=1 -b 18.06 https://github.com/zxlhhyccc/luci-app-v2raya package/luci-app-v2raya
+mkdir -p files/usr/share/xray
+wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat  -O files/usr/share/xray/geoip.dat
+wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat -O files/usr/share/xray/geosite.dat
+git clone --depth=1 -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
