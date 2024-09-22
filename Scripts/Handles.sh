@@ -74,7 +74,7 @@ if [ -f "$SP_FILE" ]; then
 fi
 
 #mosdns
-find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
-find ./ | grep Makefile | grep mosdns | xargs rm -f
-git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/luci/applications/luci-app-mosdns
+
+git clone --depth=1 -b v5-lua https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
