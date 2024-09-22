@@ -17,6 +17,10 @@ cp -f $GITHUB_WORKSPACE/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argo
 
 find ./package/base-files/files/etc/ -type f -name "openwrt_version" -exec sh -c ': > "$1"' _ {} \;
 CURRENT_TIME=$(date +"%Y-%m-%d") && sed -i "s/^DISTRIB_DESCRIPTION='.*'/DISTRIB_DESCRIPTION='布丁智能科技 © 蓝色的海 compiled in $CURRENT_TIME'/g" $(find ./package/base-files/files/etc/ -type f -name "openwrt_release")
+find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
+find ./ | grep Makefile | grep mosdns | xargs rm -f
+git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 CFG_FILE="./package/base-files/files/bin/config_generate"
 #修改默认IP地址
